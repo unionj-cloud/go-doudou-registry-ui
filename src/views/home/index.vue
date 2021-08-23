@@ -4,7 +4,9 @@
       <el-table
         :data="table"
         stripe
-        style="width: 100%">
+        style="width: 100%"
+        :row-style="{cursor: 'pointer'}"
+        @row-click="handleRowClick">
         <el-table-column
           prop="index"
           :label="$t('home.column.index')">
@@ -57,6 +59,20 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 
+interface Row {
+  index: number
+  svcName: string
+  hostname: string
+  baseUrl: string
+  status: string
+  uptime: string
+  goVer: string
+  gddVer: string
+  buildUser: string
+  buildTime: string
+  data: string
+}
+
 @Component({
   name: 'Registry',
   components: {
@@ -65,6 +81,10 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class extends Vue {
   get table() {
     return (window as any).rows
+  }
+
+  handleRowClick(row: Row) {
+    window.open(row.baseUrl + '/go-doudou/doc')
   }
 }
 </script>
